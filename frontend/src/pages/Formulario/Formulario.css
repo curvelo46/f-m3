@@ -1,0 +1,519 @@
+/* =========================================================
+   VARIABLES GLOBALES (COLORES UNIVERSIDAD)
+========================================================= */
+:root {
+    --azul-usa: #0B3C6F;
+    --azul-oscuro: #07294d;
+    --dorado-usa: #ffdb0c;
+}
+
+
+/* =========================================================
+   RESET GENERAL (AFECTA TODA LA WEB)
+========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   FONDO GLOBAL DEL FORMULARIO
+   (Formulario principal)
+========================================================= */
+body {
+    margin: 0;
+    min-height: 100vh;
+    position: relative;
+
+    background-image: url("/home/arthur/Proyectos/formulario/frontend/public/img/fondo-del-formulario.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 0;
+}
+
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   LOGO SUPERIOR (FORMULARIO)
+========================================================= */
+.logo-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.logo-top img {
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+.logo-top img:hover {
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL DEL FORMULARIO
+========================================================= */
+.form-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(4px);
+
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+
+/* =========================================================
+   HEADER DEL FORMULARIO
+========================================================= */
+.form-header {
+    background: linear-gradient(
+        135deg,
+        var(--azul-usa),
+        var(--azul-oscuro)
+    );
+    color: white;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left h1 {
+    font-size: 28px;
+    text-align: center;
+}
+
+.header-left p {
+    color: var(--dorado-usa);
+}
+
+
+/* =========================================================
+   SECCIONES DEL FORMULARIO
+========================================================= */
+.section {
+    padding: 25px;
+}
+
+.section h2 {
+    background: var(--azul-usa);
+    color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   GRID DE CAMPOS (2 COLUMNAS)
+========================================================= */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+
+/* =========================================================
+   INPUTS Y LABELS
+========================================================= */
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+/* =========================================================
+   SELECT / DROPDOWN
+========================================================= */
+.dropdown {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.dropdown:focus {
+    outline: none;
+    border-color: #0B3C6F;
+    box-shadow: 0 0 5px rgba(11,60,111,0.4);
+}
+
+.dropdown:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   BOTÓN ENVIAR (TODOS LOS FORMULARIOS)
+========================================================= */
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    background: var(--dorado-usa);
+    color:#ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    color:#000000
+}
+
+
+/* =========================================================
+   SELECTOR DE ÁREA (BOTONES GRANDES)
+========================================================= */
+.area-selector {
+    margin: var(--space-lg) 0;
+    padding: var(--space-md);
+    
+    
+    
+}
+
+.area-selector label.group-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.2px;
+}
+
+.area-selector label.group-title::before {
+    content: "🏢";
+    font-size: 1.1rem;
+    filter: grayscale(0.3);
+}
+
+
+.group-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.group-btn {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    border: 2px solid var(--azul-usa);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    background: white;
+    color: var(--azul-usa);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+
+.group-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(11, 60, 111, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.group-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+
+.group-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(11, 60, 111, 0.2);
+    border-color: var(--azul-oscuro);
+    color: var(--azul-oscuro);
+}
+
+.group-btn:hover {
+    background: #0B3C6F;
+    color: white;
+}
+
+input[type="radio"]:checked + .group-btn {
+    background: var(--azul-usa);
+    color: white;
+    border-color: var(--azul-usa);
+    box-shadow: 0 4px 15px rgba(11, 60, 111, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+input[type="radio"]:checked + .group-btn::after {
+    content: "✓";
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: var(--dorado-usa);
+    color: var(--azul-oscuro);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+input[type="radio"]:focus + .group-btn {
+    outline: 3px solid rgba(255, 219, 12, 0.5);
+    outline-offset: 2px;
+}
+
+
+
+/* Estado deshabilitado */
+.group-btn.disabled,
+input[type="radio"]:disabled + .group-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f5f5f5;
+    border-color: #ccc;
+    color: #999;
+}
+
+
+
+
+/* =========================================================
+   PANTALLA DE ÉXITO (SUCCESS SCREEN)
+========================================================= */
+.success-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-image: url("/home/arthur/Proyectos/formulario/frontend/public/img/fondo-del-formulario.png");
+    background-size: cover;
+    background-position: center;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.success-card {
+    background: white;
+    padding: 50px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.success-icon {
+    font-size: 60px;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   RESPONSIVE (MÓVIL)
+========================================================= */
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .form-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 1024px) {
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .group-btn {
+        min-width: 100%;
+    }
+    
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filtros .grupo-control {
+        min-width: 100%;
+    }
+    
+    .btn-filtrar {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .grafica-box {
+        padding: var(--space-lg);
+        margin-bottom: 100px;
+    }
+    
+    #graficaRespuestas {
+        height: 300px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: var(--space-md);
+        align-items: flex-start;
+    }
+    
+    .header-controls {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    #tablaVinculos th,
+    #tablaVinculos td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+.campo-dinamico {
+    margin-bottom: 15px;
+}
+
+.campo-dinamico label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.botones-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-opcion-multiple {
+    padding: 10px 20px;
+    border: 2px solid;
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-opcion-multiple:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-opcion-multiple.activo {
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.error-box {
+    background: #f8d7da;
+    border: 2px solid #dc3545;
+    color: #721c24;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-text {
+    color: #666;
+    font-size: 12px;
+}
+
+.error-text {
+    color: #dc2626;
+    font-size: 12px;
+}

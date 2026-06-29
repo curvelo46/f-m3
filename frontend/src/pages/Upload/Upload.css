@@ -1,0 +1,352 @@
+/* Upload.css - Estilos para la página de importación de Excel */
+
+.import-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.import-card-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.excel-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.import-card-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.flash-msg.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.flash-msg.error {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.flash-msg.info {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.flash-msg i {
+    font-size: 16px;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Formularios */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: white;
+    color: #1f2937;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+/* File Input */
+.file-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    background: #f9fafb;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.file-input-wrapper:hover {
+    border-color: #22c55e;
+    background: #f0fdf4;
+}
+
+.file-input-wrapper.dragover {
+    border-color: #22c55e;
+    background: #f0fdf4;
+    border-style: solid;
+}
+
+.file-input-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.file-input-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.file-name {
+    font-size: 13px;
+    color: #9ca3af;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-name.has-file {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+/* Botón Importar */
+.btn-import {
+    width: 100%;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.btn-import:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+}
+
+.btn-import:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Progress Bar */
+.upload-progress {
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.upload-progress.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    border-radius: 4px;
+    transition: width 0.2s ease;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-label {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.footer-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.footer-btn-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.footer-btn-green:hover {
+    background: #bbf7d0;
+}
+
+.footer-btn-blue {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.footer-btn-blue:hover {
+    background: #bfdbfe;
+}
+
+.footer-btn-purple {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.footer-btn-purple:hover {
+    background: #e9d5ff;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.footer-right i {
+    color: #10b981;
+}
+
+.version {
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .import-card {
+        padding: 24px;
+        margin: 0 16px;
+    }
+
+    .file-input-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .file-input-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .file-name {
+        text-align: center;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

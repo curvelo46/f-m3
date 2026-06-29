@@ -1,0 +1,8 @@
+Flask
+mysql-connector-python
+pandas
+openpyxl
+python-dotenv
+qrcode[pil]
+flask-cors
+odfpy

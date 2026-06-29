@@ -1,0 +1,112 @@
+
+
+/* ===============================
+   FONDO (MISMO DEL FORMULARIO)
+=================================*/
+body{
+    margin:0;
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background-image: url("../img/fondo-del-formulario.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+/* ===============================
+   TARJETA LOGIN
+=================================*/
+.login-box{
+    background:white;
+    width:420px;
+    padding:40px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+
+.logo{
+    display:flex;
+    justify-content:center;
+    margin-bottom:25px;
+}
+
+.logo img{
+    height:45px;
+}
+
+
+
+h2{
+    font-weight:500;
+    margin-bottom:25px;
+    color:#333;
+}
+
+
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group input{
+    width:100%;
+    border:none;
+    border-bottom:2px solid #ccc;
+    padding:10px 5px;
+    font-size:15px;
+    outline:none;
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    border-bottom:2px solid #0b5cab;
+}
+
+
+
+a{
+    text-decoration:none;
+    color:#0b5cab;
+    font-size:14px;
+}
+
+a:visited{
+    color:#0b5cab;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+
+
+.btn-login{
+    margin-top:30px;
+    width:140px;
+    padding:10px;
+    background:#0b5cab;
+    color:white;
+    border:none;
+    cursor:pointer;
+    float:right;
+    font-size:15px;
+}
+
+.btn-login:hover{
+    background:#084a8a;
+}
+
+
+
+.error{
+    color:red;
+    margin-top:15px;
+    font-size:14px;
+}
+

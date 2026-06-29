@@ -1,0 +1,383 @@
+/* Graficas.css - Misma estructura que graficas.css original */
+
+.vista-selector {
+    margin-bottom: 20px;
+}
+
+.vista-selector label {
+    font-weight: 600;
+    margin-right: 10px;
+    color: #334155;
+}
+
+.filtros {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.button-group {
+    display: flex;
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.group-btn {
+    padding: 10px 20px;
+    background: #f8fafc;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+}
+
+.group-btn:hover {
+    background: #e2e8f0;
+}
+
+input[type="radio"]:checked + .group-btn {
+    background: #4f46e5;
+    color: white;
+}
+
+.grupo-control {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.grupo-control label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dropdown {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    color: #334155;
+    font-size: 14px;
+    min-width: 180px;
+    cursor: pointer;
+}
+
+.seccion-grafica {
+    display: none;
+}
+
+.seccion-grafica.activa {
+    display: block;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.chart-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chart-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chart-card-title i {
+    color: #4f46e5;
+}
+
+.chart-toggle-group {
+    display: flex;
+    gap: 8px;
+}
+
+.chart-toggle {
+    padding: 6px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.chart-toggle:hover {
+    background: #f1f5f9;
+}
+
+.chart-toggle.active {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+.chart-subtitle {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.chart-actions {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    gap: 10px;
+}
+
+.chart-actions i {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: #f8fafc;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.chart-actions i:hover {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.chart-container {
+    width: 100%;
+    height: 400px;
+}
+
+/* Tabla de Vínculos */
+.table-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.table-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.table-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-card-title i {
+    color: #4f46e5;
+}
+
+.table-card-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.table-card-filter label {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-container td {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-container tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: 20px;
+    border-top: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-label {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.footer-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.footer-btn-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.footer-btn-green:hover {
+    background: #bbf7d0;
+}
+
+.footer-btn-blue {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.footer-btn-blue:hover {
+    background: #bfdbfe;
+}
+
+.footer-btn-purple {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.footer-btn-purple:hover {
+    background: #e9d5ff;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.footer-right i {
+    color: #10b981;
+}
+
+.version {
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* Animaciones */
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .chart-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .chart-actions {
+        position: static;
+        margin-top: 10px;
+    }
+
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button-group {
+        width: 100%;
+    }
+
+    .group-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
