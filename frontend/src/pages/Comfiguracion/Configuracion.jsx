@@ -24,7 +24,7 @@ const Configuracion = () => {
     });
 
     // QR
-    const [qrTexto, setQrTexto] = useState('https://sistema-admin.com/registro');
+    const [qrTexto, setQrTexto] = useState('https://f-m3.onrender.com');
     const [qrTamaño, setQrTamaño] = useState('400');
     const [qrImagen, setQrImagen] = useState(null);
     const [qrGenerando, setQrGenerando] = useState(false);
