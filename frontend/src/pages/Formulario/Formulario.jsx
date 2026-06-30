@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormulario } from '/home/arthur/Proyectos/formulario/frontend/src/hooks/ useFormulario.js';
+import { useFormulario } from '../../hooks/useFormulario';
 import './Formulario.css';
 
 const Formulario = () => {

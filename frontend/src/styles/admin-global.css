@@ -6,7 +6,7 @@
 :root {
     --sidebar-width: 260px;
     --sidebar-bg: #0f172a;
-    --sidebar-text: #94a3b8;
+    --sidebar-text: #ffffff;
     --sidebar-active: #2563eb;
     --topbar-height: 64px;
     --primary: #2563eb;
@@ -337,7 +337,7 @@ body {
 /* ===== CONTENT AREA ===== */
 .content-area {
     flex: 1;
-    padding: 30px 24px;
+    padding: 12px 24px;
     background: var(--bg-body);
 }
 

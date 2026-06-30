@@ -28,7 +28,7 @@ body {
     min-height: 100vh;
     position: relative;
 
-    background-image: url("/home/arthur/Proyectos/formulario/frontend/public/img/fondo-del-formulario.png");
+    background-image: url("../img/fondo-del-formulario.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -52,6 +52,7 @@ body::before {
 body > * {
     position: relative;
     z-index: 1;
+    width: 100%;
 }
 
 

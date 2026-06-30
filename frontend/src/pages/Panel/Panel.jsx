@@ -62,11 +62,6 @@ const Panel = () => {
                     <i className={`fas fa-bolt ${styles.logoIcon}`}></i>
                     <h1>Sistema Admin</h1>
                 </div>
-        
-  
-
-
-
 
                 <ul className="nav-menu">
                     {menuItems.map(item => (

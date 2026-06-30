@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLogs } from '../../hooks/useLogs.js';
 import Layout from '../../components/Layout/Layout.jsx';
-import '/home/arthur/Proyectos/formulario/frontend/src/styles/admin-global.css';
+import '../../styles/admin-global.css';
 
 const Logs = () => {
     const {

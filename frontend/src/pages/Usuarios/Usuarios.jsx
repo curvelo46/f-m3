@@ -216,7 +216,7 @@ const Usuarios = () => {
                     <li className={styles.navItem}><a href="/tablas" className={styles.navLink}><i className="fas fa-database"></i><span>Bases de Datos</span></a></li>
                     <li className={styles.navItem}><a href="/actividades" className={styles.navLink}><i className="far fa-clock"></i><span>Actividades</span></a></li>
                     <li className={styles.navItem}><a href="/graficas" className={styles.navLink}><i className="fas fa-chart-line"></i><span>Gráficas y Reportes</span></a></li>
-                    <li className={styles.navItem}><a href="/importar-excel" className={styles.navLink}><i className="fas fa-cloud-upload-alt"></i><span>Importar Excel</span></a></li>
+                    <li className={styles.navItem}><a href="/upload" className={styles.navLink}><i className="fas fa-cloud-upload-alt"></i><span>Importar Excel</span></a></li>
                     <li className={styles.navItem}><a href="/configuracion" className={styles.navLink}><i className="fas fa-cog"></i><span>Configuración</span></a></li>
                     <li className={styles.navItem}><a href="/logs" className={styles.navLink}><i className="fas fa-file-alt"></i><span>Logs del Sistema</span></a></li>
                 </ul>

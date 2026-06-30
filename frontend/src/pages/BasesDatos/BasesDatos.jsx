@@ -176,7 +176,7 @@ const BasesDatos = () => {
                         </a>
                     </li>
                     <li className={styles.navItem}>
-                        <a href="/importar-excel" className={styles.navLink}>
+                        <a href="/upload" className={styles.navLink}>
                             <i className="fas fa-cloud-upload-alt"></i><span>Importar Excel</span>
                         </a>
                     </li>

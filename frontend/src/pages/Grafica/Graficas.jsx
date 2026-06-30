@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { usePanel } from '../../hooks/usePanel.js';
 import Layout from '../../components/Layout/Layout.jsx';
 import api from '../../api/axiosConfig.js';
-import './Graficas.css';
+import styles from './Graficas.module.css';
 
 // Importar ECharts
 import * as echarts from 'echarts';
@@ -17,6 +17,7 @@ const Graficas = () => {
     const [tipoGraficaPrincipal, setTipoGraficaPrincipal] = useState('bar');
     const [tipoGraficaSub, setTipoGraficaSub] = useState('pie');
     const [filtroActividad, setFiltroActividad] = useState('');
+    const [dependencia, setDependencia] = useState('');
 
     // Datos reales del backend
     const [datosActividades, setDatosActividades] = useState([]);
@@ -347,8 +348,6 @@ const Graficas = () => {
         setDependencia(dep);
     };
 
-    const [dependencia, setDependencia] = useState('');
-
     const vinculosFiltrados = !dependencia
         ? datosVinculos
         : datosVinculos.filter(d => {
@@ -388,62 +387,53 @@ const Graficas = () => {
     // ---------- Render ----------
     return (
         <Layout user={user} activeSection="graficas" onLogout={handleLogout}>
-            <div className="content-area">
+            <div className={styles.contentArea}>
 
-                {/* Loading */}
-                {loading && (
-                    <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>
-                        <i className="fas fa-spinner fa-spin" style={{ fontSize: '32px', marginBottom: '16px', display: 'block' }}></i>
-                        Cargando estadísticas...
-                    </div>
-                )}
-
+                
+            {/* Loading */}
+            {loading && (
+                <div className={styles.loadingState}>
+                    <i className="fas fa-spinner fa-spin"></i>
+                    <span>Cargando estadísticas...</span>
+                </div>
+            )}
                 {/* Error */}
                 {error && (
-                    <div style={{
-                        padding: '12px 16px',
-                        borderRadius: '8px',
-                        marginBottom: '16px',
-                        backgroundColor: '#fee2e2',
-                        color: '#991b1b',
-                        border: '1px solid #fca5a5'
-                    }}>
-                        <i className="fas fa-exclamation-circle"></i> {error}
-                        <button onClick={cargarEstadisticas} style={{ marginLeft: '12px', background: 'none', border: 'none', color: '#991b1b', textDecoration: 'underline', cursor: 'pointer' }}>
-                            Reintentar
-                        </button>
-                    </div>
+                <div className={styles.errorBanner}>
+                    <i className="fas fa-exclamation-circle"></i>
+                    <span>{error}</span>
+                    <button onClick={cargarEstadisticas}>
+                        Reintentar
+                    </button>
+                </div>
                 )}
 
                 {/* Totales rápidos */}
                 {!loading && !error && (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                        gap: '16px',
-                        marginBottom: '24px'
-                    }}>
-                        <div style={{ background: '#4f46e5', color: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{totales.registros}</div>
-                            <div style={{ fontSize: '13px', opacity: 0.9 }}>Total Registros</div>
-                        </div>
-                        <div style={{ background: '#059669', color: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{totales.estudiantes}</div>
-                            <div style={{ fontSize: '13px', opacity: 0.9 }}>Estudiantes</div>
-                        </div>
-                        <div style={{ background: '#2563eb', color: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{totales.funcionarios}</div>
-                            <div style={{ fontSize: '13px', opacity: 0.9 }}>Funcionarios</div>
-                        </div>
+                <div className={styles.totalesGrid}>
+                    <div className={`${styles.totalCard} ${styles.totalCardPurple}`}>
+                        <div className={styles.totalCardValor}>{totales.registros}</div>
+                        <div className={styles.totalCardLabel}>Total Registros</div>
                     </div>
-                )}
+                    <div className={`${styles.totalCard} ${styles.totalCardGreen}`}>
+                        <div className={styles.totalCardValor}>{totales.estudiantes}</div>
+                        <div className={styles.totalCardLabel}>Estudiantes</div>
+                    </div>
+                    <div className={`${styles.totalCard} ${styles.totalCardBlue}`}>
+                        <div className={styles.totalCardValor}>{totales.funcionarios}</div>
+                        <div className={styles.totalCardLabel}>Funcionarios</div>
+                    </div>
+                </div>
+            )}
 
+
+                
                 {/* SELECTOR SUPERIOR DE VISTA */}
-                <div className="vista-selector animate-fade-in">
-                    <label htmlFor="vistaGraficas">📊 Seleccionar Vista</label>
+            <div className={`${styles.vistaSelector} ${styles.animateFadeIn}`}>
+                    <label htmlFor="vistaGraficas" className={styles.vistaSelectorLabel}>📊 Seleccionar Vista</label>
                     <select
                         id="vistaGraficas"
-                        className="dropdown"
+                        className={styles.dropdown}
                         value={vista}
                         onChange={(e) => setVista(e.target.value)}
                     >
@@ -455,48 +445,39 @@ const Graficas = () => {
                 </div>
 
                 {/* Filtros Generales */}
-                <div className="filtros animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                    <div className="button-group">
-                        <input
-                            type="radio"
-                            id="centroMedico"
-                            name="area"
-                            value="centro"
-                            hidden
-                            checked={area === 'centro'}
-                            onChange={() => handleFiltrarPorArea('centro')}
-                        />
-                        <label htmlFor="centroMedico" className={`group-btn ${area === 'centro' ? 'active' : ''}`}>Centro Médico</label>
+                <div className={`${styles.filtros} ${styles.animateFadeIn}`} style={{ animationDelay: '0.1s' }}>
+                    <div className={styles.buttonGroup}>
+                        <button
+                            type="button"
+                            className={`${styles.groupBtn} ${area === 'centro' ? styles.groupBtnActive : ''}`}
+                            onClick={() => handleFiltrarPorArea('centro')}
+                        >
+                            Centro Médico
+                        </button>
 
-                        <input
-                            type="radio"
-                            id="sst"
-                            name="area"
-                            value="sst"
-                            hidden
-                            checked={area === 'sst'}
-                            onChange={() => handleFiltrarPorArea('sst')}
-                        />
-                        <label htmlFor="sst" className={`group-btn ${area === 'sst' ? 'active' : ''}`}>Seguridad y Salud en el Trabajo (SST)</label>
+                        <button
+                            type="button"
+                            className={`${styles.groupBtn} ${area === 'sst' ? styles.groupBtnActive : ''}`}
+                            onClick={() => handleFiltrarPorArea('sst')}
+                        >
+                            Seguridad y Salud en el Trabajo (SST)
+                        </button>
 
-                        <input
-                            type="radio"
-                            id="todasAreas"
-                            name="area"
-                            value=""
-                            hidden
-                            checked={area === ''}
-                            onChange={() => handleFiltrarPorArea('')}
-                        />
-                        <label htmlFor="todasAreas" className={`group-btn ${area === '' ? 'active' : ''}`}>Todas</label>
+                        <button
+                            type="button"
+                            className={`${styles.groupBtn} ${area === '' ? styles.groupBtnActive : ''}`}
+                            onClick={() => handleFiltrarPorArea('')}
+                        >
+                            Todas
+                        </button>
                     </div>
 
-                    <div className="grupo-control">
+                    <div className={styles.grupoControl}>
                         <label>Sede (Cede)</label>
                         <select
                             name="cede"
                             id="cedeSelect"
-                            className="dropdown"
+                            className={styles.dropdown}
                             value={cede}
                             onChange={(e) => handleFiltrarPorCede(e.target.value)}
                         >
@@ -512,20 +493,19 @@ const Graficas = () => {
                 {(vista === 'ambas' || vista === 'principales') && (
                     <div
                         id="seccionPrincipales"
-                        className="seccion-grafica activa animate-slide-up"
+                        className={`${styles.seccionGraficaActiva} ${styles.animateSlideUp}`}
                         style={{ animationDelay: '0.2s' }}
                     >
-                        <div className="chart-card">
-                            <div className="chart-card-header">
-                                <div className="chart-card-title">
+                        <div className={styles.chartCard}>
+                            <div className={styles.chartCardHeader}>
+                                <div className={styles.chartCardTitle}>
                                     <i className="fas fa-chart-bar"></i>
                                     Actividades Principales
                                 </div>
-                                <div className="chart-toggle-group">
+                                <div className={styles.chartToggleGroup}>
                                     <button
                                         type="button"
-                                        className={`chart-toggle ${tipoGraficaPrincipal === 'bar' ? 'active' : ''}`}
-                                        id="btnPrincipalBar"
+                                        className={`${styles.chartToggle} ${tipoGraficaPrincipal === 'bar' ? styles.chartToggleActive : ''}`}
                                         onClick={() => setTipoGraficaPrincipal('bar')}
                                     >
                                         <i className="fas fa-chart-bar"></i>
@@ -533,8 +513,7 @@ const Graficas = () => {
                                     </button>
                                     <button
                                         type="button"
-                                        className={`chart-toggle ${tipoGraficaPrincipal === 'pie' ? 'active' : ''}`}
-                                        id="btnPrincipalPie"
+                                        className={`${styles.chartToggle} ${tipoGraficaPrincipal === 'pie' ? styles.chartToggleActive : ''}`}
                                         onClick={() => setTipoGraficaPrincipal('pie')}
                                     >
                                         <i className="fas fa-chart-pie"></i>
@@ -542,12 +521,12 @@ const Graficas = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="chart-subtitle">Total de Registros por Actividad Principal</div>
-                            <div className="chart-actions">
+                            <div className={styles.chartSubtitle}>Total de Registros por Actividad Principal</div>
+                            <div className={styles.chartActions}>
                                 <i className="fas fa-download" onClick={() => descargarGrafica('graficaActividadesPrincipales')} title="Descargar"></i>
                                 <i className="fas fa-expand" onClick={() => expandirGrafica('graficaActividadesPrincipales')} title="Expandir"></i>
                             </div>
-                            <div id="graficaActividadesPrincipales" ref={chartPrincipalRef} className="chart-container" style={{ minHeight: '400px' }}></div>
+                            <div id="graficaActividadesPrincipales" ref={chartPrincipalRef} className={styles.chartContainer}></div>
                         </div>
                     </div>
                 )}
@@ -556,20 +535,19 @@ const Graficas = () => {
                 {(vista === 'ambas' || vista === 'sub') && (
                     <div
                         id="seccionSub"
-                        className="seccion-grafica activa animate-slide-up"
+                        className={`${styles.seccionGraficaActiva} ${styles.animateSlideUp}`}
                         style={{ animationDelay: '0.3s' }}
                     >
-                        <div className="chart-card">
-                            <div className="chart-card-header">
-                                <div className="chart-card-title">
+                        <div className={styles.chartCard}>
+                            <div className={styles.chartCardHeader}>
+                                <div className={styles.chartCardTitle}>
                                     <i className="fas fa-chart-pie"></i>
                                     Sub-actividades / Campos Dinámicos
                                 </div>
-                                <div className="chart-toggle-group">
+                                <div className={styles.chartToggleGroup}>
                                     <button
                                         type="button"
-                                        className={`chart-toggle ${tipoGraficaSub === 'pie' ? 'active' : ''}`}
-                                        id="btnSubPie"
+                                        className={`${styles.chartToggle} ${tipoGraficaSub === 'pie' ? styles.chartToggleActive : ''}`}
                                         onClick={() => setTipoGraficaSub('pie')}
                                     >
                                         <i className="fas fa-chart-pie"></i>
@@ -577,8 +555,7 @@ const Graficas = () => {
                                     </button>
                                     <button
                                         type="button"
-                                        className={`chart-toggle ${tipoGraficaSub === 'bar' ? 'active' : ''}`}
-                                        id="btnSubBar"
+                                        className={`${styles.chartToggle} ${tipoGraficaSub === 'bar' ? styles.chartToggleActive : ''}`}
                                         onClick={() => setTipoGraficaSub('bar')}
                                     >
                                         <i className="fas fa-chart-bar"></i>
@@ -586,15 +563,15 @@ const Graficas = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="chart-subtitle">Distribución de Sub-actividades por Uso</div>
+                            <div className={styles.chartSubtitle}>Distribución de Sub-actividades por Uso</div>
 
                             {/* Filtro específico para sub-actividades */}
-                            <div className="filtros" style={{ background: '#f8f9fa', padding: '15px', borderRadius: '8px', marginBottom: '20px' }}>
-                                <div className="grupo-control" style={{ margin: 0 }}>
+                            <div className={`${styles.filtroInterno} ${styles.filtros}`}>
+                                <div className={styles.grupoControl} style={{ margin: 0 }}>
                                     <label>Filtrar por Actividad Principal</label>
                                     <select
                                         id="filtroActividadPrincipal"
-                                        className="dropdown"
+                                        className={styles.dropdown}
                                         value={filtroActividad}
                                         onChange={(e) => handleFiltrarSubActividades(e.target.value)}
                                     >
@@ -606,27 +583,28 @@ const Graficas = () => {
                                 </div>
                             </div>
 
-                            <div className="chart-actions">
+                            <div className={styles.chartActions}>
                                 <i className="fas fa-download" onClick={() => descargarGrafica('graficaSubActividades')} title="Descargar"></i>
                                 <i className="fas fa-expand" onClick={() => expandirGrafica('graficaSubActividades')} title="Expandir"></i>
                             </div>
-                            <div id="graficaSubActividades" ref={chartSubRef} className="chart-container" style={{ minHeight: '400px' }}></div>
+                            <div id="graficaSubActividades" ref={chartSubRef} className={styles.chartContainer}></div>
                         </div>
                     </div>
                 )}
 
                 {/* Tabla de Vínculos */}
                 {(vista === 'defaul' || vista === 'ambas') && (
-                    <div className="table-card animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                        <div className="table-card-header">
-                            <div className="table-card-title">
+                    <div className={`${styles.tableCard} ${styles.animateSlideUp}`} style={{ animationDelay: '0.4s' }}>
+                        <div className={styles.tableCardHeader}>
+                            <div className={styles.tableCardTitle}>
                                 <i className="fas fa-link"></i>
                                 Vínculos con la Universidad
                             </div>
-                            <div className="table-card-filter">
+                            <div className={styles.tableCardFilter}>
                                 <label>Dependencia:</label>
                                 <select
                                     id="dependenciaSelect"
+                                    className={styles.dropdown}
                                     value={dependencia}
                                     onChange={(e) => handleFiltrarTablaVinculos(e.target.value)}
                                 >
@@ -636,8 +614,8 @@ const Graficas = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="table-container">
-                            <table id="tablaVinculos">
+                        <div className={styles.tableContainer}>
+                            <table className={styles.dataTable}>
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -649,7 +627,7 @@ const Graficas = () => {
                                 <tbody>
                                     {vinculosFiltrados.length === 0 ? (
                                         <tr>
-                                            <td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>No hay datos de vínculos</td>
+                                            <td colSpan="4" className={styles.noDataCell}>No hay datos de vínculos</td>
                                         </tr>
                                     ) : (
                                         vinculosFiltrados.map((item, idx) => (
@@ -670,24 +648,24 @@ const Graficas = () => {
             </div>
 
             {/* Footer */}
-            <footer className="footer">
-                <div className="footer-left">
-                    <span className="footer-label">Descargar Excel</span>
-                    <button type="button" onClick={() => window.open('/api/reportes/descargar/estudiantes', '_blank')} className="footer-btn footer-btn-green">
+            <footer className={styles.footer}>
+                <div className={styles.footerLeft}>
+                    <span className={styles.footerLabel}>Descargar Excel</span>
+                    <button type="button" onClick={() => window.open('/api/reportes/descargar/estudiantes', '_blank')} className={`${styles.footerBtn} ${styles.footerBtnGreen}`}>
                         <i className="fas fa-download"></i> Estudiantes
                     </button>
-                    <button type="button" onClick={() => window.open('/api/reportes/descargar/personal_universidad', '_blank')} className="footer-btn footer-btn-blue">
+                    <button type="button" onClick={() => window.open('/api/reportes/descargar/personal_universidad', '_blank')} className={`${styles.footerBtn} ${styles.footerBtnBlue}`}>
                         <i className="fas fa-download"></i> Funcionarios
                     </button>
-                    <button type="button" onClick={() => window.open('/api/reportes/descargar/registros', '_blank')} className="footer-btn footer-btn-purple">
+                    <button type="button" onClick={() => window.open('/api/reportes/descargar/registros', '_blank')} className={`${styles.footerBtn} ${styles.footerBtnPurple}`}>
                         <i className="fas fa-download"></i> Registros
                     </button>
                 </div>
-                <div className="footer-right">
+                <div className={styles.footerRight}>
                     <i className="fas fa-shield-alt"></i>
                     <span>Sistema seguro</span>
                     <span style={{ color: '#cbd5e1' }}>|</span>
-                    <span className="version">v1.0.0</span>
+                    <span className={styles.version}>v1.0.0</span>
                 </div>
             </footer>
         </Layout>
