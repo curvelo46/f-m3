@@ -8,7 +8,7 @@ import traceback
 import functools
 import logging
 import sys
-
+import pytz
 from database import get_db
 
 
@@ -115,7 +115,7 @@ def registrar_error_db(modulo, tipo, mensaje, traceback_str, usuario, ip, url, m
             (fecha_hora, modulo, tipo, mensaje, traceback, usuario, ip, url, metodo, estado)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+             get_colombia_time().strftime("%Y-%m-%d %H:%M"), 
             modulo,
             tipo,
             mensaje,
@@ -367,3 +367,19 @@ def registrar_context_processors(app):
         return {
             'safe_url_for': safe_url_for  # Usa {{ safe_url_for('endpoint') }} en templates
         }
+
+
+
+def get_colombia_time():
+    """Obtiene la hora actual en zona horaria de Colombia (UTC-5)."""
+    colombia_tz = pytz.timezone('America/Bogota')
+    return datetime.now(colombia_tz)
+
+def convert_utc_to_colombia(utc_datetime):
+    """Convierte una fecha UTC a hora de Colombia."""
+    if utc_datetime is None:
+        return None
+    colombia_tz = pytz.timezone('America/Bogota')
+    if utc_datetime.tzinfo is None:
+        utc_datetime = pytz.utc.localize(utc_datetime)
+    return utc_datetime.astimezone(colombia_tz)
