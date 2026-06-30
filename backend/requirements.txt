@@ -6,4 +6,5 @@ python-dotenv
 qrcode[pil]
 flask-cors
 odfpy
+pytz
 gunicorn==23.0.0
