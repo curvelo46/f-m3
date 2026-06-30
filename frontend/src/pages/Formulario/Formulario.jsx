@@ -22,6 +22,48 @@ const Formulario = () => {
         mostrarSemestre
     } = useFormulario();
 
+    // Validación: solo números para cédula
+    const handleCedulaChange = (e) => {
+        const valor = e.target.value;
+        // Solo permitir dígitos numéricos
+        const soloNumeros = valor.replace(/[^0-9]/g, '');
+        // Crear un evento sintético con el valor filtrado
+        const eventoSintetico = {
+            target: {
+                name: 'cedula',
+                value: soloNumeros
+            }
+        };
+        handleChange(eventoSintetico);
+    };
+
+    // Validación: solo letras y espacios para nombre
+    const handleNombreChange = (e) => {
+        const valor = e.target.value;
+        // Solo permitir letras (incluyendo acentos, ñ) y espacios
+        const soloLetras = valor.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        const eventoSintetico = {
+            target: {
+                name: 'nombre',
+                value: soloLetras
+            }
+        };
+        handleChange(eventoSintetico);
+    };
+
+    // Validación: solo números para teléfono
+    const handleTelefonoChange = (e) => {
+        const valor = e.target.value;
+        const soloNumeros = valor.replace(/[^0-9]/g, '');
+        const eventoSintetico = {
+            target: {
+                name: 'telefono',
+                value: soloNumeros
+            }
+        };
+        handleChange(eventoSintetico);
+    };
+
     // Si se envió correctamente, mostrar pantalla de éxito
     if (success) {
         return (
@@ -83,10 +125,12 @@ const Formulario = () => {
                                 type="text"
                                 name="cedula"
                                 value={formData.cedula}
-                                onChange={handleChange}
+                                onChange={handleCedulaChange}
                                 className="dropdown"
                                 required
                                 placeholder="Ingrese cédula"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                             />
                             {buscando && <span className="loading-text">Buscando...</span>}
                         </div>
@@ -97,10 +141,11 @@ const Formulario = () => {
                                 type="text"
                                 name="nombre"
                                 value={formData.nombre}
-                                onChange={handleChange}
+                                onChange={handleNombreChange}
                                 className="dropdown"
                                 required
                                 placeholder="Nombre completo"
+                                inputMode="text"
                             />
                         </div>
 
@@ -110,10 +155,12 @@ const Formulario = () => {
                                 type="text"
                                 name="telefono"
                                 value={formData.telefono}
-                                onChange={handleChange}
+                                onChange={handleTelefonoChange}
                                 className="dropdown"
                                 required
                                 placeholder="Teléfono"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
                             />
                         </div>
 
