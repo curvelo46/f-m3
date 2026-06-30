@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
 from database import get_db
-from utils import no_cache
+from utils import no_cache,get_colombia_time
 
 registros_bp = Blueprint('registros', __name__, url_prefix='/api/registros')
 
@@ -42,7 +42,7 @@ def index():
                 sub_actividades[key] = valor if valor else None
 
             # Fecha actual
-            fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+             fecha = get_colombia_time()
             accion = "insertar"
 
             # Insertar registro
