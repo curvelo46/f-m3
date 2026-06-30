@@ -5,40 +5,42 @@
     --azul-usa: #0B3C6F;
     --azul-oscuro: #07294d;
     --dorado-usa: #ffdb0c;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 24px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
 }
 
 
 /* =========================================================
-   RESET GENERAL (AFECTA TODA LA WEB)
+   RESET GENERAL
 ========================================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
 }
 
 
 /* =========================================================
    FONDO GLOBAL DEL FORMULARIO
-   (Formulario principal)
 ========================================================= */
 body {
     margin: 0;
     min-height: 100vh;
     position: relative;
-
     background-image: url("../img/fondo-del-formulario.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
-
 }
 
 body::before {
@@ -57,7 +59,7 @@ body > * {
 
 
 /* =========================================================
-   LOGO SUPERIOR (FORMULARIO)
+   LOGO SUPERIOR
 ========================================================= */
 .logo-top {
     display: flex;
@@ -65,10 +67,12 @@ body > * {
     align-items: center;
     margin-top: 10px;
     margin-bottom: 25px;
+    padding: 0 var(--space-md);
 }
 
 .logo-top img {
     height: 150px;
+    max-width: 100%;
     cursor: pointer;
     transition: transform 0.25s ease;
 }
@@ -84,14 +88,21 @@ body > * {
 .form-container {
     max-width: 900px;
     width: 100%;
-    margin: 0 auto;
-
+    margin: 0 auto var(--space-xl);
     background: rgba(255,255,255,0.96);
     backdrop-filter: blur(4px);
-
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* En móvil: quitar márgenes laterales para que ocupe todo */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 0 0 var(--space-lg);
+        border-radius: 0;
+        width: 100%;
+    }
 }
 
 
@@ -99,11 +110,7 @@ body > * {
    HEADER DEL FORMULARIO
 ========================================================= */
 .form-header {
-    background: linear-gradient(
-        135deg,
-        var(--azul-usa),
-        var(--azul-oscuro)
-    );
+    background: linear-gradient(135deg, var(--azul-usa), var(--azul-oscuro));
     color: white;
     padding: 25px;
     display: flex;
@@ -114,10 +121,56 @@ body > * {
 .header-left h1 {
     font-size: 28px;
     text-align: center;
+    line-height: 1.3;
 }
 
 .header-left p {
     color: var(--dorado-usa);
+}
+
+/* Móvil: header más compacto */
+@media (max-width: 768px) {
+    .form-header {
+        padding: 16px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .header-left h1 {
+        font-size: 20px;
+    }
+}
+
+
+/* =========================================================
+   ALERTAS / MENSAJES
+========================================================= */
+.alert {
+    padding: 14px 18px;
+    margin: 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.alert-success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+@media (max-width: 768px) {
+    .alert {
+        margin: 12px;
+        padding: 12px 14px;
+        font-size: 13px;
+    }
 }
 
 
@@ -131,14 +184,27 @@ body > * {
 .section h2 {
     background: var(--azul-usa);
     color: white;
-    padding: 10px;
+    padding: 12px 16px;
     margin-bottom: 20px;
     font-size: 18px;
+    border-radius: var(--radius-sm);
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 16px;
+    }
+
+    .section h2 {
+        font-size: 16px;
+        padding: 10px 12px;
+        margin-bottom: 14px;
+    }
 }
 
 
 /* =========================================================
-   GRID DE CAMPOS (2 COLUMNAS)
+   GRID DE CAMPOS (2 COLUMNAS → 1 en móvil)
 ========================================================= */
 .grid-2 {
     display: grid;
@@ -146,41 +212,43 @@ body > * {
     gap: 15px;
 }
 
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
 
 /* =========================================================
-   INPUTS Y LABELS
+   INPUTS, LABELS Y SELECTS
 ========================================================= */
 label {
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     display: block;
+    color: #334155;
+    font-weight: 500;
 }
 
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-
-/* =========================================================
-   SELECT / DROPDOWN
-========================================================= */
+input,
+select,
 .dropdown {
     width: 100%;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px 14px;
     border: 1px solid #ccc;
-    font-size: 14px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
     background-color: white;
-    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+input:focus,
+select:focus,
 .dropdown:focus {
     outline: none;
-    border-color: #0B3C6F;
-    box-shadow: 0 0 5px rgba(11,60,111,0.4);
+    border-color: var(--azul-usa);
+    box-shadow: 0 0 0 3px rgba(11,60,111,0.15);
 }
 
 .dropdown:disabled {
@@ -189,24 +257,20 @@ input {
     cursor: not-allowed;
 }
 
+/* Móvil: inputs más grandes para mejor tacto */
+@media (max-width: 768px) {
+    input,
+    select,
+    .dropdown {
+        padding: 14px 12px;
+        font-size: 16px; /* Previene zoom en iOS */
+        min-height: 48px;
+    }
 
-/* =========================================================
-   BOTÓN ENVIAR (TODOS LOS FORMULARIOS)
-========================================================= */
-.submit-btn {
-    width: 100%;
-    padding: 18px;
-    border: none;
-    background: var(--dorado-usa);
-    color:#ffffff;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.submit-btn:hover {
-    color:#000000
+    label {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
 }
 
 
@@ -216,9 +280,6 @@ input {
 .area-selector {
     margin: var(--space-lg) 0;
     padding: var(--space-md);
-    
-    
-    
 }
 
 .area-selector label.group-title {
@@ -237,7 +298,6 @@ input {
     font-size: 1.1rem;
     filter: grayscale(0.3);
 }
-
 
 .group-title {
     margin-bottom: 10px;
@@ -268,8 +328,8 @@ input {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    display: block;
 }
-
 
 .group-btn::before {
     content: '';
@@ -289,17 +349,11 @@ input {
     height: 300px;
 }
 
-
 .group-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(11, 60, 111, 0.2);
     border-color: var(--azul-oscuro);
     color: var(--azul-oscuro);
-}
-
-.group-btn:hover {
-    background: #0B3C6F;
-    color: white;
 }
 
 input[type="radio"]:checked + .group-btn {
@@ -328,16 +382,11 @@ input[type="radio"]:checked + .group-btn::after {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-
-
 input[type="radio"]:focus + .group-btn {
     outline: 3px solid rgba(255, 219, 12, 0.5);
     outline-offset: 2px;
 }
 
-
-
-/* Estado deshabilitado */
 .group-btn.disabled,
 input[type="radio"]:disabled + .group-btn {
     opacity: 0.5;
@@ -347,137 +396,104 @@ input[type="radio"]:disabled + .group-btn {
     color: #999;
 }
 
-
-
-
-/* =========================================================
-   PANTALLA DE ÉXITO (SUCCESS SCREEN)
-========================================================= */
-.success-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background-image: url("../img/fondo-del-formulario.png");
-    background-size: cover;
-    background-position: center;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
-
-.success-card {
-    background: white;
-    padding: 50px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.success-icon {
-    font-size: 60px;
-    color: #28a745;
-    margin-bottom: 20px;
-}
-
-
-/* =========================================================
-   RESPONSIVE (MÓVIL)
-========================================================= */
+/* MÓVIL: botones de área apilados y más grandes */
 @media (max-width: 768px) {
-    .grid-2 {
-        grid-template-columns: 1fr;
-    }
-
-    .form-header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-}
-
-
-
-
-/* =========================================================
-   RESPONSIVE DESIGN
-========================================================= */
-
-@media (max-width: 1024px) {
     .button-group {
         flex-direction: column;
+        gap: 10px;
     }
-    
+
     .group-btn {
         min-width: 100%;
-    }
-    
-    .filtros {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .filtros .grupo-control {
-        min-width: 100%;
-    }
-    
-    .btn-filtrar {
-        width: 100%;
-        justify-content: center;
+        padding: 16px 20px;
+        font-size: 15px;
     }
 }
 
+
+/* =========================================================
+   BOTÓN ENVIAR
+========================================================= */
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    background: var(--dorado-usa);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-btn:hover {
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 219, 12, 0.3);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Móvil: botón más grande para mejor tacto */
 @media (max-width: 768px) {
-    .grafica-box {
-        padding: var(--space-lg);
-        margin-bottom: 100px;
+    .submit-btn {
+        padding: 20px;
+        font-size: 17px;
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
     }
-    
-    #graficaRespuestas {
-        height: 300px;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        gap: var(--space-md);
-        align-items: flex-start;
-    }
-    
-    .header-controls {
-        width: 100%;
-        flex-wrap: wrap;
-    }
-    
-    #tablaVinculos th,
-    #tablaVinculos td {
-        padding: 10px 12px;
-        font-size: 0.85rem;
-    }
+}
+
+
+/* =========================================================
+   CAMPOS DINÁMICOS
+========================================================= */
+.campos-dinamicos {
+    margin-top: 20px;
+}
+
+.campos-dinamicos h3 {
+    font-size: 16px;
+    color: var(--azul-usa);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 .campo-dinamico {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .campo-dinamico label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     font-weight: 500;
+    color: #334155;
 }
 
-.botones-grupo {
+.required {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Grupo de botones (opciones múltiples) */
+.grupo-botones {
+    margin-top: 8px;
+}
+
+.botones-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 10px;
 }
 
-.btn-opcion-multiple {
-    padding: 10px 20px;
+.boton-opcion {
+    padding: 10px 18px;
     border: 2px solid;
     background: white;
     border-radius: 25px;
@@ -487,26 +503,107 @@ input[type="radio"]:disabled + .group-btn {
     font-weight: 500;
 }
 
-.btn-opcion-multiple:hover {
+.boton-opcion:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.btn-opcion-multiple.activo {
+.boton-opcion.seleccionado {
     font-weight: bold;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.error-box {
-    background: #f8d7da;
-    border: 2px solid #dc3545;
-    color: #721c24;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
+.hint {
+    display: block;
+    margin-top: 8px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* Móvil: botones de opciones más grandes */
+@media (max-width: 768px) {
+    .botones-container {
+        gap: 8px;
+    }
+
+    .boton-opcion {
+        padding: 12px 16px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    .campos-dinamicos h3 {
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   PANTALLA DE ÉXITO
+========================================================= */
+.success-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/fondo-del-formulario.png");
+    background-size: cover;
+    background-position: center;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    z-index: 999;
+    padding: 20px;
+}
+
+.success-card {
+    background: white;
+    padding: 50px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 90%;
+    width: 400px;
+}
+
+.success-icon {
+    font-size: 60px;
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.success-card h2 {
+    font-size: 24px;
+    color: #1e293b;
+    margin-bottom: 24px;
+}
+
+/* Móvil: pantalla de éxito más compacta */
+@media (max-width: 768px) {
+    .success-card {
+        padding: 32px 24px;
+        width: 100%;
+    }
+
+    .success-icon {
+        font-size: 48px;
+    }
+
+    .success-card h2 {
+        font-size: 20px;
+    }
+}
+
+
+/* =========================================================
+   TEXTOS AUXILIARES
+========================================================= */
+.loading-text {
+    display: block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 13px;
 }
 
 .info-text {
@@ -517,4 +614,48 @@ input[type="radio"]:disabled + .group-btn {
 .error-text {
     color: #dc2626;
     font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE GENERAL
+========================================================= */
+@media (max-width: 1024px) {
+    .button-group {
+        flex-direction: column;
+    }
+
+    .group-btn {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Logo más pequeño en móvil */
+    .logo-top img {
+        height: 100px;
+    }
+
+    /* Ajustar body para scroll suave en móvil */
+    body {
+        background-attachment: scroll;
+    }
+
+    /* Mejorar touch targets */
+    input,
+    select,
+    button,
+    .dropdown {
+        min-height: 44px;
+    }
+}
+
+/* Prevenir zoom en inputs en iOS */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px;
+    }
 }
