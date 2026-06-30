@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePanel } from '../../hooks/usePanel.js';
-import './Panel.css';
+import styles from './Panel.module.css';
 
 const Panel = () => {
     const { user, handleLogout } = usePanel();
@@ -55,13 +55,18 @@ const Panel = () => {
     }
 
     return (
-        <div className="panel-page">
+        <div className={styles.panelPage}>
             {/* ===== SIDEBAR ===== */}
-            <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} id="sidebar">
-                <div className="sidebar-header">
-                    <i className="fas fa-bolt logo-icon"></i>
+            <aside className={`${styles.sidebar} ${sidebarOpen ? styles.open : ''}`}>
+                <div className={styles.sidebarHeader}>
+                    <i className={`fas fa-bolt ${styles.logoIcon}`}></i>
                     <h1>Sistema Admin</h1>
                 </div>
+        
+  
+
+
+
 
                 <ul className="nav-menu">
                     {menuItems.map(item => (
@@ -96,12 +101,11 @@ const Panel = () => {
             </aside>
 
             {/* ===== MAIN CONTENT ===== */}
-            <div className="main-content">
-                {/* Top Bar */}
-                <header className="top-bar">
-                    <div className="breadcrumb">
-                        <i className="fas fa-bars" onClick={toggleSidebar}></i>
-                        <span className="current">Dashboard</span>
+              <div className={styles.mainContent}>
+                <header className={styles.topBar}>
+                    <div className={styles.breadcrumb}>
+                        <i className="fas fa-bars" onClick={() => setSidebarOpen(!sidebarOpen)}></i>
+                        <span className={styles.current}>Dashboard</span>
                     </div>
                     <div className="top-bar-right">
                         <div className="search-box">
@@ -129,36 +133,36 @@ const Panel = () => {
                 </header>
 
                 {/* Content Area */}
-                <div className="content-area">
-                    <div className="welcome-section">
-                        <h2>Bienvenido al Dashboard</h2>
+                <div className={styles.contentArea}>
+      <div className={styles.welcomeSection}>
+       <h2>Bienvenido al Dashboard</h2>
                         <p>Aquí puedes gestionar usuarios, revisar reportes, configurar el sistema y mucho más.</p>
-                    </div>
+      </div>
 
-                    <div className="image-section">
+                    <div className={styles.imageSection}>
                         <img src="/img/images.png" alt="Dashboard" />
-                        <div className="motivational-quote">
-                            <i className="fas fa-quote-left quote-icon"></i>
-                            <p className="quote-text">
+                        <div className={styles.motivationalQuote }>
+                            <i className={styles.quoteIcon}></i>
+                            <p className={styles.quoteText}>
                                 "Cada día que dedicas al estudio es un escalón que te acerca a tus sueños. 
                                 El conocimiento que construyes hoy será el puente hacia el futuro que imaginas. 
                                 No se trata solo de aprobar, se trata de <strong>transformar tu vida</strong>."
                             </p>
-                            <div className="quote-footer">
-                                <span className="quote-line"></span>
-                                <span className="quote-author">— Sistema Admin</span>
-                                <span className="quote-line"></span>
+                            <div className={styles.quoteFooter}>
+                                <span className={styles.quoteLine}></span>
+                                <span className={styles.quoteAuthor}>— Sistema Admin</span>
+                                <span className={styles.quoteLine}></span>
                             </div>
-                            <div className="quote-stats">
-                                <div className="stat-item">
+                            <div className={styles.quoteStats}>
+                                <div className={styles.statItem}>
                                     <i className="fas fa-book-open"></i>
                                     <span>Aprende</span>
                                 </div>
-                                <div className="stat-item">
+                                <div className={styles.statItem}>
                                     <i className="fas fa-lightbulb"></i>
                                     <span>Crece</span>
                                 </div>
-                                <div className="stat-item">
+                                <div className={styles.statItem}>
                                     <i className="fas fa-trophy"></i>
                                     <span>Triunfa</span>
                                 </div>

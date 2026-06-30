@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '',  // ← VACÍO, porque los endpoints ya incluyen /api/
+  baseURL: '/api',  // ← VACÍO, porque los endpoints ya incluyen /api/
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
-from flask import Flask, g, request, session, flash, redirect, url_for, make_response
+from flask import Flask, g, request, session, flash, redirect, url_for, make_response, send_from_directory
 from flask_cors import CORS
+import os
 from config import Config
 from database_singleton import init_db, close_db
 
@@ -17,19 +18,35 @@ from blueprints.procesosAlmacenado import procesos_bp
 from utils import capturar_errores_bp, configurar_manejadores_errores, registrar_context_processors, registrar_error_db
 import traceback
 
+
 def create_app():
-    app = Flask(__name__)
+    # ============================================================
+    # CONFIGURACIÓN DE RUTAS ESTÁTICAS (Frontend React integrado)
+    # ============================================================
+    # En producción, el build de React se copia a backend/static/
+    # En desarrollo, Flask usa la carpeta static por defecto
+
+    static_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+
+    app = Flask(__name__, 
+                static_folder=static_folder_path,
+                static_url_path='')
+
     app.config.from_object(Config)
     app.secret_key = Config.SECRET_KEY
 
-    # ✅ CORS GLOBAL - Permite que React se comunique con Flask
-    # NOTA: Cuando supports_credentials=True, NO puedes usar origins="*"
-    CORS(app, 
-         origins=["http://localhost:5173", "http://localhost:3000"],
-         supports_credentials=True,
-         allow_headers=["Content-Type", "Authorization", "Accept"],
-         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-         expose_headers=["Content-Type", "X-Total-Count"])
+    # ============================================================
+    # CORS - Solo en desarrollo (localhost)
+    # En producción con monolito, NO necesitas CORS porque frontend 
+    # y backend están en el mismo dominio
+    # ============================================================
+    if os.environ.get('FLASK_ENV') == 'development':
+        CORS(app, 
+             origins=["http://localhost:5173", "http://localhost:3000"],
+             supports_credentials=True,
+             allow_headers=["Content-Type", "Authorization", "Accept"],
+             methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+             expose_headers=["Content-Type", "X-Total-Count"])
 
     # Inicializar base de datos
     init_db()
@@ -58,47 +75,92 @@ def create_app():
     configurar_manejadores_errores(app)
     registrar_context_processors(app)
 
-    # Manejador global OPTIONS para preflight requests
+    # ============================================================
+    # MANEJADORES CORS (solo desarrollo)
+    # ============================================================
     @app.after_request
     def after_request(response):
         """Asegura que todas las respuestas tengan headers CORS correctos."""
-        origin = request.headers.get('Origin')
-        if origin in ["http://localhost:5173", "http://localhost:3000"]:
-            response.headers['Access-Control-Allow-Origin'] = origin
-            response.headers['Access-Control-Allow-Credentials'] = 'true'
-            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Accept'
-            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+        if os.environ.get('FLASK_ENV') == 'development':
+            origin = request.headers.get('Origin')
+            if origin in ["http://localhost:5173", "http://localhost:3000"]:
+                response.headers['Access-Control-Allow-Origin'] = origin
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Accept'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
         return response
 
     @app.route("/", methods=["OPTIONS"])
     @app.route("/<path:path>", methods=["OPTIONS"])
     def handle_options(path=None):
         """Responde a las peticiones OPTIONS (preflight) de CORS."""
-        response = make_response()
-        origin = request.headers.get('Origin')
-        if origin in ["http://localhost:5173", "http://localhost:3000"]:
-            response.headers['Access-Control-Allow-Origin'] = origin
-            response.headers['Access-Control-Allow-Credentials'] = 'true'
-            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Accept'
-            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
-        response.status_code = 204
-        return response
+        if os.environ.get('FLASK_ENV') == 'development':
+            response = make_response()
+            origin = request.headers.get('Origin')
+            if origin in ["http://localhost:5173", "http://localhost:3000"]:
+                response.headers['Access-Control-Allow-Origin'] = origin
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
+                response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, Accept'
+                response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+            response.status_code = 204
+            return response
+        return make_response('', 204)
 
-    # Manejadores globales de errores
+    # ============================================================
+    # SERVIR FRONTEND REACT (Single Page Application)
+    # ============================================================
+    # Estas rutas deben ir DESPUÉS de los blueprints de la API
+    # y sirven el build de React para cualquier ruta no-API
+
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve_react(path):
+        """Sirve el frontend React en todas las rutas no-API."""
+        # Si la ruta comienza con api/, no es del frontend
+        if path.startswith('api/'):
+            return {"error": "Not found"}, 404
+
+        # Si el archivo existe en static, servirlo directamente
+        if path and os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+
+        # Para cualquier otra ruta, servir index.html (React Router)
+        index_path = os.path.join(app.static_folder, 'index.html')
+        if os.path.exists(index_path):
+            return send_from_directory(app.static_folder, 'index.html')
+
+        # Si no hay build de React, mostrar mensaje informativo
+        return """
+        <h1>Backend API - F-M3</h1>
+        <p>El frontend no está compilado. Ejecuta <code>npm run build</code> en la carpeta frontend/</p>
+        <p>y copia la carpeta <code>dist/</code> a <code>backend/static/</code></p>
+        """, 200
+
+    # ============================================================
+    # MANEJADORES GLOBALES DE ERRORES
+    # ============================================================
     @app.errorhandler(404)
     def not_found(error):
-        registrar_error_db(
-            modulo='app',
-            tipo='Advertencia',
-            mensaje=f'404 Not Found: {request.url}',
-            traceback_str='',
-            usuario=session.get('admin', 'Anónimo'),
-            ip=request.remote_addr or 'unknown',
-            url=request.url,
-            metodo=request.method
-        )
-        if request.is_json:
+        # Si es una petición API, devolver JSON
+        if request.path.startswith('/api/'):
+            registrar_error_db(
+                modulo='app',
+                tipo='Advertencia',
+                mensaje=f'404 API Not Found: {request.url}',
+                traceback_str='',
+                usuario=session.get('admin', 'Anónimo'),
+                ip=request.remote_addr or 'unknown',
+                url=request.url,
+                metodo=request.method
+            )
             return {"error": "Recurso no encontrado"}, 404
+
+        # Si es una petición del frontend, dejar que React maneje el 404
+        index_path = os.path.join(app.static_folder, 'index.html')
+        if os.path.exists(index_path) and not request.path.startswith('/api/'):
+            return send_from_directory(app.static_folder, 'index.html')
+
+        # Fallback a redirección
         return redirect(url_for('auth.panel'))
 
     @app.errorhandler(500)
@@ -114,12 +176,13 @@ def create_app():
             url=request.url,
             metodo=request.method
         )
-        if request.is_json:
+        if request.is_json or request.path.startswith('/api/'):
             return {"error": "Error interno del servidor"}, 500
         flash("Error interno del servidor", "error")
         return redirect(url_for('auth.panel'))
 
     return app
+
 
 if __name__ == "__main__":
     app = create_app()

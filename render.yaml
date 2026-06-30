@@ -1,0 +1,22 @@
+# ============================================================
+# Render.com - Configuración de despliegue
+# ============================================================
+# Este archivo configura automáticamente tu servicio en Render.
+# Colócalo en la raíz de tu repositorio.
+
+services:
+  - type: web
+    name: f-m3
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PORT
+        value: 10000
+    # Render asigna automáticamente una URL como:
+    # https://f-m3.onrender.com
