@@ -360,11 +360,11 @@ input[type="radio"]:disabled + .group-btn {
     width: 100%;
     height: 100%;
 
-    background-image: url("/home/arthur/Proyectos/formulario/frontend/public/img/fondo-del-formulario.png");
+    background-image: url("../img/fondo-del-formulario.png");
     background-size: cover;
     background-position: center;
 
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999;
