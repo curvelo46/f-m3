@@ -548,6 +548,15 @@ const Configuracion = () => {
                                     <i className="fas fa-envelope form-input-icon"></i>
                                 </div>
                             </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Repositorio del proyecto</label>
+                                <div className="form-input-with-icon">
+                                    <span className="form-input-static">https://github.com/curvelo46/f-m3/tree/main</span>
+                                    <i className="fas fa-link form-input-icon"></i>
+                                </div>
+                            </div>
+                            
                         </div>
 
                         {/* 4. Generador de QR */}
