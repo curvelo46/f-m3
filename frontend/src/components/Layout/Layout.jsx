@@ -88,7 +88,7 @@ const Layout = ({ children, user, activeSection = 'dashboard', onLogout }) => {
                     <div className="breadcrumb">
                         <i className="fas fa-bars" onClick={toggleSidebar}></i>
                         <span className="current">
-                            {menuItems.find(m => m.id === activeSection)?.label || 'Dashboard'}
+                            {menuItems.find(m => m.id === activeSection)?.label || 'Configuracion'}
                         </span>
                     </div>
                     <div className="top-bar-right">
