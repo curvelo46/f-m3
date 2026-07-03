@@ -8,8 +8,7 @@
     background: #f1f5f9;
 }
 
-
-/* ===== SIDEBAR (consistencia con otros módulos) ===== */
+/* ===== SIDEBAR ===== */
 .sidebar {
     width: 260px;
     background-color: #0f172a;
@@ -84,6 +83,7 @@
     font-size: 16px;
 }
 
+/* ===== USER CARD ===== */
 .userCard {
     margin: 20px 12px;
     padding: 20px 16px;
@@ -152,7 +152,6 @@
     background: rgba(239, 68, 68, 0.2);
 }
 
-
 /* ===== MAIN CONTENT ===== */
 .mainContent {
     flex: 1;
@@ -162,7 +161,7 @@
     min-height: 100vh;
 }
 
-/* Top Bar */
+/* ===== TOP BAR ===== */
 .topBar {
     height: 64px;
     background: #ffffff;
@@ -297,7 +296,7 @@
     padding: 32px;
 }
 
-/* Welcome Section */
+/* ===== WELCOME SECTION ===== */
 .welcomeSection {
     margin-bottom: 32px;
 }
@@ -315,7 +314,7 @@
     line-height: 1.6;
 }
 
-/* Image Section */
+/* ===== IMAGE SECTION ===== */
 .imageSection {
     display: flex;
     gap: 32px;
@@ -324,6 +323,7 @@
     border-radius: 16px;
     padding: 32px;
     border: 1px solid #e2e8f0;
+    margin-bottom: 24px;
 }
 
 .imageSection img {
@@ -333,7 +333,7 @@
     object-fit: cover;
 }
 
-/* Motivational Quote */
+/* ===== MOTIVATIONAL QUOTE ===== */
 .motivationalQuote {
     flex: 1;
     display: flex;
@@ -381,7 +381,7 @@
     font-weight: 500;
 }
 
-/* Quote Stats */
+/* ===== QUOTE STATS ===== */
 .quoteStats {
     display: flex;
     gap: 32px;
@@ -413,6 +413,376 @@
     font-size: 0.85rem;
     font-weight: 600;
     color: #1e293b;
+}
+
+/* ============================================================
+   🚀 BOTÓN DE NOVEDADES / VERSIÓN
+   ============================================================ */
+
+.versionButtonWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.versionButton {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.versionButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.versionButton:hover::before {
+    left: 100%;
+}
+
+.versionButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+}
+
+.versionButton:active {
+    transform: translateY(-1px);
+}
+
+.versionButton > i {
+    font-size: 1.4rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.versionButtonContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.versionButtonLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.versionButtonVersion {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.versionButtonBadge {
+    background: #fbbf24;
+    color: #1e293b;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* ============================================================
+   🎨 MODAL DE NOTAS DE VERSIÓN
+   ============================================================ */
+
+/* Overlay oscuro de fondo */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Card/Modal principal */
+.versionModal {
+    background: #ffffff;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header del modal */
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    z-index: 10;
+}
+
+.modalHeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.modalIcon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.modalHeader h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.modalDate {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.modalCloseBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+    transform: rotate(90deg);
+}
+
+/* Firma del desarrollador */
+.devSignature {
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    margin: 0 32px;
+    border-radius: 16px;
+    margin-top: 20px;
+}
+
+.devSignature .quoteFooter {
+    margin-bottom: 16px;
+}
+
+.devSignature .quoteLine {
+    background: #334155;
+}
+
+.devSignature .quoteAuthor {
+    color: #94a3b8;
+}
+
+.devSignature .quoteText {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.devSignature .quoteText strong {
+    color: #fbbf24;
+}
+
+/* Cuerpo del modal */
+.modalBody {
+    padding: 24px 32px 16px;
+}
+
+/* Secciones de cambios */
+.changeSection {
+    margin-bottom: 28px;
+}
+
+.changeSection h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 0 0 16px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.changeIcon {
+    font-size: 1.2rem;
+}
+
+.changeSection ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.changeSection ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    transition: all 0.25s ease;
+}
+
+.changeSection ul li:hover {
+    background: #fff;
+    border-color: #c7d2fe;
+    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08);
+    transform: translateX(4px);
+}
+
+/* Tags de cambio */
+.changeTag {
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+.tagMajor {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.tagMinor {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* Nota de texto */
+.noteText {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 14px;
+    color: #92400e;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 8px;
+}
+
+.noteText i {
+    font-size: 1.2rem;
+    color: #d97706;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* Footer del modal */
+.modalFooter {
+    padding: 16px 32px 28px;
+    display: flex;
+    justify-content: center;
+}
+
+.modalCloseAction {
+    padding: 12px 40px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.modalCloseAction:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
 /* ===== LOADING ===== */
@@ -499,9 +869,95 @@
         width: 100%;
         justify-content: center;
     }
+
+    /* Modal responsive */
+    .modalOverlay {
+        padding: 12px;
+        align-items: flex-end;
+    }
+
+    .versionModal {
+        max-height: 90vh;
+        border-radius: 20px 20px 0 0;
+        animation: slideUpMobile 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUpMobile {
+        from {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modalHeader {
+        padding: 20px 20px 16px;
+    }
+
+    .modalHeader h2 {
+        font-size: 1.15rem;
+    }
+
+    .modalIcon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .devSignature {
+        margin: 0 20px;
+        margin-top: 16px;
+        padding: 18px 20px;
+    }
+
+    .modalBody {
+        padding: 16px 20px 12px;
+    }
+
+    .modalFooter {
+        padding: 12px 20px 20px;
+    }
+
+    .changeSection ul li {
+        padding: 12px 14px;
+        font-size: 0.88rem;
+    }
+
+    .versionButton {
+        padding: 12px 18px;
+    }
+
+    .versionButtonLabel {
+        font-size: 0.75rem;
+    }
+
+    .versionButtonVersion {
+        font-size: 0.95rem;
+    }
 }
 
-/* Scrollbar */
+/* Scrollbar del modal */
+.versionModal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.versionModal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.versionModal::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.versionModal::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Scrollbar general */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
