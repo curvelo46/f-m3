@@ -22,48 +22,6 @@ const Formulario = () => {
         mostrarSemestre
     } = useFormulario();
 
-    // Validación: solo números para cédula
-    const handleCedulaChange = (e) => {
-        const valor = e.target.value;
-        // Solo permitir dígitos numéricos
-        const soloNumeros = valor.replace(/[^0-9]/g, '');
-        // Crear un evento sintético con el valor filtrado
-        const eventoSintetico = {
-            target: {
-                name: 'cedula',
-                value: soloNumeros
-            }
-        };
-        handleChange(eventoSintetico);
-    };
-
-    // Validación: solo letras y espacios para nombre
-    const handleNombreChange = (e) => {
-        const valor = e.target.value;
-        // Solo permitir letras (incluyendo acentos, ñ) y espacios
-        const soloLetras = valor.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
-        const eventoSintetico = {
-            target: {
-                name: 'nombre',
-                value: soloLetras
-            }
-        };
-        handleChange(eventoSintetico);
-    };
-
-    // Validación: solo números para teléfono
-    const handleTelefonoChange = (e) => {
-        const valor = e.target.value;
-        const soloNumeros = valor.replace(/[^0-9]/g, '');
-        const eventoSintetico = {
-            target: {
-                name: 'telefono',
-                value: soloNumeros
-            }
-        };
-        handleChange(eventoSintetico);
-    };
-
     // Si se envió correctamente, mostrar pantalla de éxito
     if (success) {
         return (
@@ -125,12 +83,10 @@ const Formulario = () => {
                                 type="text"
                                 name="cedula"
                                 value={formData.cedula}
-                                onChange={handleCedulaChange}
+                                onChange={handleChange}
                                 className="dropdown"
                                 required
                                 placeholder="Ingrese cédula"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
                             />
                             {buscando && <span className="loading-text">Buscando...</span>}
                         </div>
@@ -141,11 +97,10 @@ const Formulario = () => {
                                 type="text"
                                 name="nombre"
                                 value={formData.nombre}
-                                onChange={handleNombreChange}
+                                onChange={handleChange}
                                 className="dropdown"
                                 required
                                 placeholder="Nombre completo"
-                                inputMode="text"
                             />
                         </div>
 
@@ -155,12 +110,10 @@ const Formulario = () => {
                                 type="text"
                                 name="telefono"
                                 value={formData.telefono}
-                                onChange={handleTelefonoChange}
+                                onChange={handleChange}
                                 className="dropdown"
                                 required
                                 placeholder="Teléfono"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
                             />
                         </div>
 
@@ -182,120 +135,123 @@ const Formulario = () => {
                     </div>
                 </section>
 
-                {/* INFORMACIÓN DE LA ACTIVIDAD */}
-                <section className="section">
-                    <h2>Información de la Actividad</h2>
-                    <div className="grid-2">
-                        {/* Selector de Área */}
-                        <div className="area-selector">
-                            <label className="group-title">
-                                Área o Cargo de la actividad en la que participó:
-                            </label>
-                            <div className="button-group">
-                                <input
-                                    type="radio"
-                                    id="centroMedico"
-                                    name="area"
-                                    value="centro"
-                                    checked={formData.area === 'centro'}
-                                    onChange={handleChange}
-                                    hidden
-                                    required
-                                />
-                                <label htmlFor="centroMedico" className={`group-btn ${formData.area === 'centro' ? 'active' : ''}`}>
-                                    Centro Médico
-                                </label>
+              {/* INFORMACIÓN DE LA ACTIVIDAD */}
+<section className="section">
+    <h2>Información de la Actividad</h2>
+    
+    {/* Fila 1: Selector de Área (ocupa todo el ancho) */}
+    <div className="area-selector">
+        <label className="group-title">
+            Área o Cargo de la actividad en la que participó:
+        </label>
+        <div className="button-group">
+            <input
+                type="radio"
+                id="centroMedico"
+                name="area"
+                value="centro"
+                checked={formData.area === 'centro'}
+                onChange={handleChange}
+                hidden
+                required
+            />
+            <label htmlFor="centroMedico" className={`group-btn ${formData.area === 'centro' ? 'active' : ''}`}>
+                Centro Médico
+            </label>
 
-                                <input
-                                    type="radio"
-                                    id="sst"
-                                    name="area"
-                                    value="sst"
-                                    checked={formData.area === 'sst'}
-                                    onChange={handleChange}
-                                    hidden
-                                />
-                                <label htmlFor="sst" className={`group-btn ${formData.area === 'sst' ? 'active' : ''}`}>
-                                    Seguridad y Salud en el Trabajo (SST)
-                                </label>
-                            </div>
-                        </div>
+            <input
+                type="radio"
+                id="sst"
+                name="area"
+                value="sst"
+                checked={formData.area === 'sst'}
+                onChange={handleChange}
+                hidden
+            />
+            <label htmlFor="sst" className={`group-btn ${formData.area === 'sst' ? 'active' : ''}`}>
+                Seguridad y Salud en el Trabajo (SST)
+            </label>
+        </div>
+    </div>
 
-                        {/* Cede */}
-                        <div>
-                            <label>Cede actual</label>
-                            <select
-                                name="cedeactual"
-                                value={formData.cedeactual}
-                                onChange={handleChange}
-                                className="dropdown"
-                                required
-                            >
-                                <option value="">Seleccione una opción</option>
-                                {cedes.map(c => (
-                                    <option key={c} value={c}>{c}</option>
-                                ))}
-                            </select>
-                        </div>
+    {/* Fila 2: Cede (debajo del área) */}
+    <div className="fila-cede" style={{ marginBottom: '16px' }}>
+        <label>Cede actual</label>
+        <select
+            name="cedeactual"
+            value={formData.cedeactual}
+            onChange={handleChange}
+            className="dropdown"
+            required
+        >
+            <option value="">Seleccione una opción</option>
+            {cedes.map(c => (
+                <option key={c} value={c}>{c}</option>
+            ))}
+        </select>
+    </div>
 
-                        {/* Dependencia */}
-                        {mostrarDependencia && (
-                            <div>
-                                <label>Dependencia / Programa *</label>
-                                <select
-                                    name="dependencia"
-                                    value={formData.dependencia}
-                                    onChange={handleChange}
-                                    className="dropdown"
-                                    required
-                                >
-                                    <option value="">Seleccione una opción</option>
-                                    {dependencias.map(d => (
-                                        <option key={d} value={d}>{d}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
+    {/* Fila 3: Resto de campos en grid de 2 */}
+    <div className="grid-2">
+        {/* Dependencia */}
+        {mostrarDependencia && (
+            <div>
+                <label>Dependencia / Programa *</label>
+                <select
+                    name="dependencia"
+                    value={formData.dependencia}
+                    onChange={handleChange}
+                    className="dropdown"
+                    required
+                >
+                    <option value="">Seleccione una opción</option>
+                    {dependencias.map(d => (
+                        <option key={d} value={d}>{d}</option>
+                    ))}
+                </select>
+            </div>
+        )}
 
-                        {/* Semestre */}
-                        {mostrarSemestre && (
-                            <div>
-                                <label>Semestre inscrito</label>
-                                <select
-                                    name="semestre"
-                                    value={formData.semestre}
-                                    onChange={handleChange}
-                                    className="dropdown"
-                                    required
-                                >
-                                    <option value="">Seleccione una opción</option>
-                                    {semestres.map(s => (
-                                        <option key={s} value={s}>{s}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
+        {/* Semestre */}
+        {mostrarSemestre && (
+            <div>
+                <label>Semestre inscrito</label>
+                <select
+                    name="semestre"
+                    value={formData.semestre}
+                    onChange={handleChange}
+                    className="dropdown"
+                    required
+                >
+                    <option value="">Seleccione una opción</option>
+                    {semestres.map(s => (
+                        <option key={s} value={s}>{s}</option>
+                    ))}
+                </select>
+            </div>
+        )}
 
-                        {/* Actividad */}
-                        <div>
-                            <label>Actividad o servicio en el que participó</label>
-                            <select
-                                name="actividad"
-                                value={formData.actividad}
-                                onChange={handleChange}
-                                className="dropdown"
-                                required
-                                disabled={!formData.area}
-                            >
-                                <option value="">
-                                    {formData.area ? 'Seleccione actividad' : 'Seleccione primero un área'}
-                                </option>
-                                {formData.area && actividades[formData.area]?.map(act => (
-                                    <option key={act.id} value={act.nombre}>{act.nombre}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
+        {/* Actividad */}
+        <div>
+            <label>Actividad o servicio en el que participó</label>
+            <select
+                name="actividad"
+                value={formData.actividad}
+                onChange={handleChange}
+                className="dropdown"
+                required
+                disabled={!formData.area}
+            >
+                <option value="">
+                    {formData.area ? 'Seleccione actividad' : 'Seleccione primero un área'}
+                </option>
+                {formData.area && actividades[formData.area]?.map(act => (
+                    <option key={act.id} value={act.nombre}>{act.nombre}</option>
+                ))}
+            </select>
+        </div>
+    </div>
+
 
                     {/* CAMPOS DINÁMICOS */}
                     {camposDinamicos.length > 0 && (
