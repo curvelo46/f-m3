@@ -42,7 +42,7 @@ def index():
                 sub_actividades[key] = valor if valor else None
 
             # Fecha actual
-            fecha = get_colombia_time()
+            fecha = get_colombia_time().strftime("%Y-%m-%d %H:%M")
             accion = "insertar"
 
             # Insertar registro
