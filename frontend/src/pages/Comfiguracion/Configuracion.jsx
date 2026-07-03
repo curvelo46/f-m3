@@ -24,7 +24,7 @@ const Configuracion = () => {
     });
 
     // QR
-    const [qrTexto, setQrTexto] = useState('https://f-m3.onrender.com');
+    const [qrTexto, setQrTexto] = useState('https://sistema-admin.com/registro');
     const [qrTamaño, setQrTamaño] = useState('400');
     const [qrImagen, setQrImagen] = useState(null);
     const [qrGenerando, setQrGenerando] = useState(false);
@@ -362,62 +362,64 @@ const Configuracion = () => {
                     {/* Fila superior */}
                     <div className="config-grid">
                         {/* 1. Limpieza de Datos */}
-                        <div className="clean-card">
-                            <h2>
-                                <i className="fas fa-broom"></i>
-                                Limpieza de Base de Datos
-                            </h2>
+                        {Number(user?.prioridad) === 0 && (
+                            <div className="clean-card">
+                                <h2>
+                                    <i className="fas fa-broom"></i>
+                                    Limpieza de Base de Datos
+                                </h2>
 
-                            <button
-                                onClick={() => abrirConfirmacion('estudiantes')}
-                                className="btn-clean btn-red"
-                                disabled={eliminando}
-                                type="button"
-                            >
-                                <i className="far fa-trash-alt"></i>
-                                Eliminar datos de ESTUDIANTES
-                            </button>
+                                <button
+                                    onClick={() => abrirConfirmacion('estudiantes')}
+                                    className="btn-clean btn-red"
+                                    disabled={eliminando}
+                                    type="button"
+                                >
+                                    <i className="far fa-trash-alt"></i>
+                                    Eliminar datos de ESTUDIANTES
+                                </button>
 
-                            <button
-                                onClick={() => abrirConfirmacion('personal_universidad')}
-                                className="btn-clean btn-orange"
-                                disabled={eliminando}
-                                type="button"
-                            >
-                                <i className="far fa-trash-alt"></i>
-                                Eliminar datos de FUNCIONARIOS
-                            </button>
+                                <button
+                                    onClick={() => abrirConfirmacion('personal_universidad')}
+                                    className="btn-clean btn-orange"
+                                    disabled={eliminando}
+                                    type="button"
+                                >
+                                    <i className="far fa-trash-alt"></i>
+                                    Eliminar datos de FUNCIONARIOS
+                                </button>
 
-                            <button
-                                onClick={() => abrirConfirmacion('registros')}
-                                className="btn-clean btn-purple"
-                                disabled={eliminando}
-                                type="button"
-                            >
-                                <i className="far fa-trash-alt"></i>
-                                Eliminar REGISTROS DEL FORMULARIO
-                            </button>
+                                <button
+                                    onClick={() => abrirConfirmacion('registros')}
+                                    className="btn-clean btn-purple"
+                                    disabled={eliminando}
+                                    type="button"
+                                >
+                                    <i className="far fa-trash-alt"></i>
+                                    Eliminar REGISTROS DEL FORMULARIO
+                                </button>
 
-                            <button
-                                onClick={() => abrirConfirmacion('auditoria_sistema')}
-                                className="btn-clean btn-blue"
-                                disabled={eliminando}
-                                type="button"
-                            >
-                                <i className="far fa-trash-alt"></i>
-                                Eliminar REGISTROS DE TABLA LOGS
-                            </button>
+                                <button
+                                    onClick={() => abrirConfirmacion('auditoria_sistema')}
+                                    className="btn-clean btn-blue"
+                                    disabled={eliminando}
+                                    type="button"
+                                >
+                                    <i className="far fa-trash-alt"></i>
+                                    Eliminar REGISTROS DE TABLA LOGS
+                                </button>
 
-                            <button
-                                onClick={() => abrirConfirmacion('errores_sistema')}
-                                className="btn-clean btn-blue"
-                                disabled={eliminando}
-                                type="button"
-                            >
-                                <i className="far fa-trash-alt"></i>
-                                Eliminar REGISTROS DE TABLA ERRORES
-                            </button>
-                        </div>
+                                <button
+                                    onClick={() => abrirConfirmacion('errores_sistema')}
+                                    className="btn-clean btn-blue"
+                                    disabled={eliminando}
+                                    type="button"
+                                >
+                                    <i className="far fa-trash-alt"></i>
+                                    Eliminar REGISTROS DE TABLA ERRORES
+                                </button>
+                            </div>
+                        )}
 
                         {/* 2. Errores del Sistema */}
                         <div className="config-card">
