@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../api/axiosConfig.js';
 
 export const usePanel = () => {
-    const [user, setUser] = useState({ nombre: '', prioridad: 0 });
+    const [user, setUser] = useState({ nombre: '', prioridad: '' });
     const [loading, setLoading] = useState(true);
 
     // Verificar sesión al cargar
