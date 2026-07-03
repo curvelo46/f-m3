@@ -79,43 +79,50 @@ const Formulario = () => {
                     <div className="grid-2">
                         <div>
                             <label>Documento de identidad</label>
-                            <input
-                                type="text"
-                                name="cedula"
-                                value={formData.cedula}
-                                onChange={handleChange}
-                                className="dropdown"
-                                required
-                                placeholder="Ingrese cédula"
-                            />
-                            {buscando && <span className="loading-text">Buscando...</span>}
-                        </div>
+                            // NOMBRE: solo letras y espacios
+<input
+    type="text"
+    name="nombre"
+    value={formData.nombre}
+    onChange={(e) => {
+        const valor = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        e.target.value = valor;
+        handleChange(e);
+    }}
+    className="dropdown"
+    required
+    placeholder="Nombre completo"
+/>
 
-                        <div>
-                            <label>Nombre y apellidos completos</label>
-                            <input
-                                type="text"
-                                name="nombre"
-                                value={formData.nombre}
-                                onChange={handleChange}
-                                className="dropdown"
-                                required
-                                placeholder="Nombre completo"
-                            />
-                        </div>
+// CÉDULA: solo números
+<input
+    type="text"
+    name="cedula"
+    value={formData.cedula}
+    onChange={(e) => {
+        const valor = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = valor;
+        handleChange(e);
+    }}
+    className="dropdown"
+    required
+    placeholder="Ingrese cédula"
+/>
 
-                        <div>
-                            <label>Número de teléfono</label>
-                            <input
-                                type="text"
-                                name="telefono"
-                                value={formData.telefono}
-                                onChange={handleChange}
-                                className="dropdown"
-                                required
-                                placeholder="Teléfono"
-                            />
-                        </div>
+// TELÉFONO: solo números
+<input
+    type="text"
+    name="telefono"
+    value={formData.telefono}
+    onChange={(e) => {
+        const valor = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = valor;
+        handleChange(e);
+    }}
+    className="dropdown"
+    required
+    placeholder="Teléfono"
+/>
 
                         <div>
                             <label>Vínculo con la Universidad</label>
