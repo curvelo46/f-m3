@@ -15,6 +15,8 @@ const Configuracion = () => {
     const [loading, setLoading] = useState(true);
     const [mensaje, setMensaje] = useState(null);
     const [eliminando, setEliminando] = useState(false);
+    const [descargandoDb, setDescargandoDb] = useState(false);
+    const [guardandoRespaldo, setGuardandoRespaldo] = useState(false);
 
     // Modal de confirmación
     const [modalConfirm, setModalConfirm] = useState({
@@ -127,6 +129,52 @@ const Configuracion = () => {
     };
 
     // ---------- Generador de QR ----------
+    
+    const guardarRespaldoBaseDatos = async () => {
+        setGuardandoRespaldo(true);
+        setMensaje(null);
+
+        try {
+            const response = await api.post('/api/admin/base-datos/guardar-respaldo');
+            if (!response.data?.success) {
+                throw new Error(response.data?.error || 'Error al guardar el respaldo');
+            }
+
+            setMensaje({ tipo: 'success', texto: '✅ Respaldo actualizado correctamente' });
+        } catch (err) {
+            console.error('❌ Error guardando el respaldo:', err);
+            setMensaje({
+                tipo: 'error',
+                texto: err.response?.data?.error || err.message || 'Error al guardar el respaldo'
+            });
+        } finally {
+            setGuardandoRespaldo(false);
+        }
+    };
+
+    const guardarRespaldoBaseDatosauto = async () => {
+        setGuardandoRespaldo(true);
+        setMensaje(null);
+
+        try {
+            const response = await api.post('/api/admin/base-datos/guardar-respaldo');
+            if (!response.data?.success) {
+                throw new Error(response.data?.error || 'Error al guardar el respaldo');
+            }
+
+            setMensaje({ tipo: 'success', texto: '✅ Respaldo actualizado correctamente' });
+        } catch (err) {
+            console.error('❌ Error guardando el respaldo:', err);
+            setMensaje({
+                tipo: 'error',
+                texto: err.response?.data?.error || err.message || 'Error al guardar el respaldo'
+            });
+        } finally {
+            setGuardandoRespaldo(false);
+        }
+    };
+
+
     const generarQR = async () => {
         if (!qrTexto.trim()) {
             setMensaje({ tipo: 'error', texto: 'Por favor ingresa un texto o URL' });
@@ -399,6 +447,7 @@ const Configuracion = () => {
                                     Eliminar REGISTROS DEL FORMULARIO
                                 </button>
 
+
                                 <button
                                     onClick={() => abrirConfirmacion('auditoria_sistema')}
                                     className="btn-clean btn-blue"
@@ -524,11 +573,33 @@ const Configuracion = () => {
 
                     {/* Fila inferior */}
                     <div className="config-grid-bottom">
+                        {Number(user?.prioridad) === 0 && (
+                            <div className="config-card export-db-card">
+                                <div className="config-card-header">
+                                    <i className="fas fa-database icon-database"></i>
+                                    3. Backup de Base de Datos
+                                </div>
+                                <p className="export-db-text">
+                                    Descarga una copia completa del archivo SQLite de la aplicación en formato .db.
+                                </p>
+                             
+                                <button
+                                    type="button"
+                                    className="btn-primary export-db-btn"
+                                    onClick={guardarRespaldoBaseDatos}
+                                    disabled={guardandoRespaldo}
+                                >
+                                    <i className={`fas ${guardandoRespaldo ? 'fa-spinner fa-spin' : 'fa-save'}`}></i>
+                                    {guardandoRespaldo ? 'Guardando respaldo...' : 'Guardar respaldo .db'}
+                                </button>
+                            </div>
+                        )}
+
                         {/* 3. Información de Contacto */}
                         <div className="config-card">
                             <div className="config-card-header">
                                 <i className="fas fa-user icon-contact"></i>
-                                3. Información de Contacto del Ingeniero
+                                4. Información de Contacto del Ingeniero
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Nombre Completo</label>
@@ -541,6 +612,7 @@ const Configuracion = () => {
                                     <i className="fas fa-phone form-input-icon"></i>
                                 </div>
                             </div>
+                            
                             <div className="form-group">
                                 <label className="form-label">Correo Electrónico</label>
                                 <div className="form-input-with-icon">
@@ -549,21 +621,20 @@ const Configuracion = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
+                             <div className="form-group">
                                 <label className="form-label">Repositorio del proyecto</label>
                                 <div className="form-input-with-icon">
                                     <span className="form-input-static">https://github.com/curvelo46/f-m3/tree/main</span>
                                     <i className="fas fa-link form-input-icon"></i>
                                 </div>
                             </div>
-                            
                         </div>
 
                         {/* 4. Generador de QR */}
                         <div className="config-card">
                             <div className="config-card-header">
                                 <i className="fas fa-qrcode icon-qr"></i>
-                                4. Generador de QR
+                                5. Generador de QR
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Texto o URL</label>
@@ -629,7 +700,7 @@ const Configuracion = () => {
                         <div className="config-card">
                             <div className="config-card-header">
                                 <i className="fas fa-image icon-image"></i>
-                                5. Cargar Imagen
+                                6. Cargar Imagen
                             </div>
                             <div
                                 className="upload-zone"
@@ -680,6 +751,8 @@ const Configuracion = () => {
                             </button>
                         </div>
                     </div>
+
+                
                 </div>
             </div>
 
