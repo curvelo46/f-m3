@@ -143,6 +143,29 @@ def eliminar_tabla():
 # ESTADÍSTICAS DE ADMIN
 # ============================================================
 
+@admin_bp.route("/base-datos/descargar", methods=["GET"])
+@requiere_admin
+def descargar_base_datos():
+    """Descarga la base de datos SQLite completa como archivo .db."""
+    prioridad = session.get("prioridad")
+    if prioridad != 0:
+        return jsonify({
+            "success": False,
+            "error": "No autorizado. Se requiere ser superadministrador"
+        }), 403
+
+    if not os.path.exists(Config.DB_NAME):
+        return jsonify({
+            "success": False,
+            "error": "No se encontró el archivo de la base de datos"
+        }), 404
+
+    return send_file(
+        Config.DB_NAME,
+        mimetype="application/octet-stream",
+        as_attachment=True,
+        download_name="base_de_datos.db"
+    )
 
 
 def crear_respaldo_base_datos():
