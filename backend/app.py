@@ -1,6 +1,8 @@
 from flask import Flask, g, request, session, flash, redirect, url_for, make_response, send_from_directory
 from flask_cors import CORS
 import os
+import threading
+import time
 from config import Config
 from database_singleton import init_db, close_db
 
@@ -10,7 +12,7 @@ from blueprints.api import api_bp
 from blueprints.upload import upload_bp
 from blueprints.registros import registros_bp
 from blueprints.actividades import actividades_bp
-from blueprints.admin import admin_bp
+from blueprints.admin import admin_bp, crear_respaldo_base_datos
 from blueprints.reportes import reportes_bp
 from blueprints.procesosAlmacenado import procesos_bp
 
@@ -74,6 +76,9 @@ def create_app():
 
     configurar_manejadores_errores(app)
     registrar_context_processors(app)
+
+    # Iniciar el programador de respaldos automáticos en segundo plano
+    iniciar_programador_respaldo(app)
 
     # ============================================================
     # MANEJADORES CORS (solo desarrollo)
@@ -182,6 +187,22 @@ def create_app():
         return redirect(url_for('auth.panel'))
 
     return app
+
+
+def iniciar_programador_respaldo(app):
+    """Inicia un hilo en segundo plano que guarda un respaldo automático cada 60 días."""
+    def tarea_periodica():
+        intervalo = getattr(Config, 'BACKUP_INTERVAL_SECONDS', 60 * 24 * 3600)
+        while True:
+            time.sleep(intervalo)
+            try:
+                resultado = crear_respaldo_base_datos()
+                app.logger.info(f"Respaldo automático de base de datos completado: {resultado['backup_path']}")
+            except Exception as e:
+                app.logger.error(f"Error en respaldo automático de base de datos: {e}")
+
+    hilo = threading.Thread(target=tarea_periodica, daemon=True, name='RespaldoAutoThread')
+    hilo.start()
 
 
 if __name__ == "__main__":
