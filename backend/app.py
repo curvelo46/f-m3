@@ -11,7 +11,7 @@ from blueprints.auth import auth_bp
 from blueprints.api import api_bp
 from blueprints.upload import upload_bp
 from blueprints.registros import registros_bp
-from blueprints.actividades import admin_bp
+from blueprints.actividades import actividades_bp
 from blueprints.admin import admin_bp, crear_respaldo_base_datos
 from blueprints.reportes import reportes_bp
 from blueprints.procesosAlmacenado import procesos_bp
@@ -61,7 +61,7 @@ def create_app():
     capturar_errores_bp(reportes_bp)
     capturar_errores_bp(api_bp)
     capturar_errores_bp(procesos_bp)
-    capturar_errores_bp(admin_bp)
+    capturar_errores_bp(actividades_bp)
     capturar_errores_bp(admin_bp)
 
     # Registrar blueprints
@@ -71,7 +71,7 @@ def create_app():
     app.register_blueprint(reportes_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(procesos_bp)
-    app.register_blueprint(admin_bp)
+    app.register_blueprint(actividades_bp)
     app.register_blueprint(admin_bp)
 
     configurar_manejadores_errores(app)
