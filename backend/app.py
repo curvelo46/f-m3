@@ -11,7 +11,7 @@ from blueprints.auth import auth_bp
 from blueprints.api import api_bp
 from blueprints.upload import upload_bp
 from blueprints.registros import registros_bp
-from blueprints.actividades import actividades_bp
+from blueprints.actividades import admin_bp
 from blueprints.admin import admin_bp, crear_respaldo_base_datos
 from blueprints.reportes import reportes_bp
 from blueprints.procesosAlmacenado import procesos_bp
