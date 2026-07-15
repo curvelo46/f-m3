@@ -41,3 +41,6 @@ class Config:
         "unidad_organizativa": "dependencia",
         "ce_coste": "centro costo"
     }
+
+    # Intervalo de respaldo automático en segundos (aprox. 60 días)
+    BACKUP_INTERVAL_SECONDS = 60 * 24 * 3600
