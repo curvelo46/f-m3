@@ -94,6 +94,25 @@
 .icon-contact { color: #3b82f6; }
 .icon-qr { color: #8b5cf6; }
 .icon-image { color: #10b981; }
+.icon-database { color: #0f766e; }
+
+.export-db-card {
+    
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.export-db-text {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.export-db-btn {
+    width: 100%;
+}
 
 /* Formularios */
 .form-group {
@@ -354,20 +373,23 @@
 }
 
 .btn-primary {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s;
-    flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  flex: 1;
+  margin-top: 9%;
+  margin-bottom: -3%;
+  height: 13%;
 }
 
 .btn-primary:hover:not(:disabled) {
