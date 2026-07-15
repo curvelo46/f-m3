@@ -253,6 +253,11 @@ const Panel = () => {
                                         <span className={styles.changeTag} className={styles.tagMajor}>Nuevo</span>
                                         Se agregó una tabla en la que se ven las modificaciones que los administradores le hacen al sistema.
                                     </li>
+
+                                    <li>
+                                        <span className={styles.changeTag} className={styles.tagMajor}>Nuevo</span>
+                                        Se agregó una carta que les permitira descargar un respal de 
+                                    </li>
                                 </ul>
                             </div>
 
