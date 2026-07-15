@@ -582,7 +582,15 @@ const Configuracion = () => {
                                 <p className="export-db-text">
                                     Descarga una copia completa del archivo SQLite de la aplicación en formato .db.
                                 </p>
-                             
+                                <button
+                                    type="button"
+                                    className="btn-primary export-db-btn"
+                                    onClick={descargarBaseDatos}
+                                    disabled={descargandoDb}
+                                >
+                                    <i className={`fas ${descargandoDb ? 'fa-spinner fa-spin' : 'fa-download'}`}></i>
+                                    {descargandoDb ? 'Descargando...' : 'Descargar base de datos .db'}
+                                </button>
                                 <button
                                     type="button"
                                     className="btn-primary export-db-btn"
