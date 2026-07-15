@@ -129,6 +129,40 @@ const Configuracion = () => {
     };
 
     // ---------- Generador de QR ----------
+
+     const descargarBaseDatos = async () => {
+        setDescargandoDb(true);
+        setMensaje(null);
+
+        try {
+            const response = await api.get('/api/admin/base-datos/descargar', {
+                responseType: 'blob'
+            });
+
+            const blob = new Blob([response.data], { type: 'application/octet-stream' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'base_de_datos.db';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            setMensaje({ tipo: 'success', texto: '✅ Base de datos descargada correctamente' });
+        } catch (err) {
+            console.error('❌ Error descargando la base de datos:', err);
+            setMensaje({
+                tipo: 'error',
+                texto: err.response?.data?.error || err.message || 'Error al descargar la base de datos'
+            });
+        } finally {
+            setDescargandoDb(false);
+        }
+    };
+
+
+
     
     const guardarRespaldoBaseDatos = async () => {
         setGuardandoRespaldo(true);
