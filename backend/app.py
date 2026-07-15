@@ -61,7 +61,7 @@ def create_app():
     capturar_errores_bp(reportes_bp)
     capturar_errores_bp(api_bp)
     capturar_errores_bp(procesos_bp)
-    capturar_errores_bp(actividades_bp)
+    capturar_errores_bp(admin_bp)
     capturar_errores_bp(admin_bp)
 
     # Registrar blueprints
@@ -71,7 +71,7 @@ def create_app():
     app.register_blueprint(reportes_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(procesos_bp)
-    app.register_blueprint(actividades_bp)
+    app.register_blueprint(admin_bp)
     app.register_blueprint(admin_bp)
 
     configurar_manejadores_errores(app)
