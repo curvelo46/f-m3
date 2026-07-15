@@ -83,11 +83,7 @@ const Formulario = () => {
                                 type="text"
                                 name="cedula"
                                 value={formData.cedula}
-                                onChange={(e) => {
-                                    const valor = e.target.value.replace(/[^0-9]/g, '');
-                                    e.target.value = valor;
-                                    handleChange(e);
-                                }}
+                                onChange={handleChange}
                                 className="dropdown"
                                 required
                                 placeholder="Ingrese cédula"
@@ -101,11 +97,7 @@ const Formulario = () => {
                                 type="text"
                                 name="nombre"
                                 value={formData.nombre}
-                                onChange={(e) => {
-                                    const valor = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
-                                    e.target.value = valor;
-                                    handleChange(e);
-                                }}
+                                onChange={handleChange}
                                 className="dropdown"
                                 required
                                 placeholder="Nombre completo"
@@ -114,15 +106,11 @@ const Formulario = () => {
 
                         <div>
                             <label>Número de teléfono</label>
-                           <input
+                            <input
                                 type="text"
                                 name="telefono"
                                 value={formData.telefono}
-                                onChange={(e) => {
-                                    const valor = e.target.value.replace(/[^0-9]/g, '');
-                                    e.target.value = valor;
-                                    handleChange(e);
-                                }}
+                                onChange={handleChange}
                                 className="dropdown"
                                 required
                                 placeholder="Teléfono"
