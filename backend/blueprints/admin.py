@@ -1,4 +1,8 @@
-from flask import Blueprint, request, jsonify, session
+import os
+import shutil
+
+from flask import Blueprint, request, jsonify, session, send_file
+from config import Config
 from database import get_db
 from utils import requiere_admin, solo_superadmin
 
@@ -138,6 +142,53 @@ def eliminar_tabla():
 # ============================================================
 # ESTADÍSTICAS DE ADMIN
 # ============================================================
+
+
+
+def crear_respaldo_base_datos():
+    """Crea un respaldo de la base de datos en la carpeta de backups."""
+    if not os.path.exists(Config.DB_NAME):
+        raise FileNotFoundError("No se encontró el archivo de la base de datos")
+
+    backup_dir = os.path.join(os.path.dirname(Config.DB_NAME), 'backups')
+    os.makedirs(backup_dir, exist_ok=True)
+    backup_path = os.path.join(backup_dir, 'base_de_datos_backup.db')
+
+    shutil.copy2(Config.DB_NAME, backup_path)
+
+    return {
+        "success": True,
+        "message": "Respaldo guardado correctamente",
+        "backup_path": backup_path
+    }
+
+
+@admin_bp.route("/base-datos/guardar-respaldo", methods=["POST"])
+@requiere_admin
+def guardar_respaldo_base_datos():
+    """Guarda una copia de la base de datos en la carpeta de respaldos, sobrescribiendo la anterior."""
+    prioridad = session.get("prioridad")
+    if prioridad != 0:
+        return jsonify({
+            "success": False,
+            "error": "No autorizado. Se requiere ser superadministrador"
+        }), 403
+
+    try:
+        resultado = crear_respaldo_base_datos()
+    except FileNotFoundError as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 404
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Error al guardar el respaldo: {str(e)}"
+        }), 500
+
+    return jsonify(resultado)
+
 
 @admin_bp.route("/stats", methods=["GET"])
 @requiere_admin
