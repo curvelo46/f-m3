@@ -129,8 +129,7 @@ const Configuracion = () => {
     };
 
     // ---------- Generador de QR ----------
-
-     const descargarBaseDatos = async () => {
+    const descargarBaseDatos = async () => {
         setDescargandoDb(true);
         setMensaje(null);
 
@@ -161,9 +160,6 @@ const Configuracion = () => {
         }
     };
 
-
-
-    
     const guardarRespaldoBaseDatos = async () => {
         setGuardandoRespaldo(true);
         setMensaje(null);
@@ -344,18 +340,16 @@ const Configuracion = () => {
             <div className="content-area">
                 {/* Mensajes flash */}
                 {mensaje && (
-                    <div className="flash-container" style={{ marginBottom: '16px' }}>
-                        <div className={`flash-card ${mensaje.tipo}`}>
-                            <span className="icon">{mensaje.tipo === 'success' ? '✅' : '⚠️'}</span>
-                            <p>{mensaje.texto}</p>
-                            <button
-                                className="flash-close"
-                                onClick={() => setMensaje(null)}
-                                style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', opacity: 0.5 }}
-                            >
-                                <i className="fas fa-times"></i>
-                            </button>
-                        </div>
+                    <div className={`alertaMensaje ${mensaje.tipo === 'error' ? 'alertaError' : 'alertaSuccess'}`}>
+                        <i className={`fas fa-${mensaje.tipo === 'error' ? 'exclamation-circle' : 'check-circle'}`}></i>
+                        <span>{mensaje.texto}</span>
+                        <button
+                            className="flash-close"
+                            onClick={() => setMensaje(null)}
+                            style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', opacity: 0.5 }}
+                        >
+                            <i className="fas fa-times"></i>
+                        </button>
                     </div>
                 )}
 
