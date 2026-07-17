@@ -256,7 +256,13 @@ const Panel = () => {
 
                                     <li>
                                         <span className={styles.changeTag} className={styles.tagMajor}>Nuevo</span>
-                                        Se agregó una carta que les permitira descargar un respal de 
+                                        Se agregó una carta que les permitira descargar un respaldo de la base de datos
+                                    </li>
+
+                                    
+                                    <li>
+                                        <span className={styles.changeTag} className={styles.tagMajor}>Nuevo</span>
+                                        La funcion guardar lo que hace es que crea una copia internamente en la pagina
                                     </li>
                                 </ul>
                             </div>
